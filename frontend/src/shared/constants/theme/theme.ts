@@ -24,6 +24,18 @@ export const theme = createTheme({
     white: '#ffffff',
     black: '#24292f',
     colors: {
+        cyan: [
+            '#e6f7f7',
+            '#c2ecec',
+            '#98dede',
+            '#6ed0d0',
+            '#54C4C4',
+            '#3DBABA',
+            '#2EACAC',
+            '#239898',
+            '#1A9494',
+            '#0F7A7A'
+        ],
         dark: [
             '#c9d1d9',
             '#b1bac4',
