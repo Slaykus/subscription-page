@@ -314,6 +314,74 @@ body::before {
 }
 
 /* ============================================================
+   MOBILE: Performance optimizations
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* Kill all expensive fixed pseudo-elements — each is a GPU layer */
+    body::before,
+    body::after,
+    #root::before {
+        display: none;
+    }
+
+    /* Remove filter:blur() from ALL cloud elements.
+       filter on an animated element forces a full composite repaint
+       every single animation frame — worst possible mobile perf pattern.
+       Transforms (translateX/Y) are compositor-only and stay fast.       */
+    .cloud {
+        filter: none !important;
+    }
+
+    /* Reduce to 3 clouds — fewer concurrent animations */
+    .cloud-1,
+    .cloud-5 {
+        display: none;
+    }
+
+    /* Tone down remaining clouds (no blur → needs less opacity) */
+    .cloud-2 { opacity: 0.55; }
+    .cloud-3 { opacity: 0.45; }
+    .cloud-4 { opacity: 0.50; }
+
+    /* Stop aurora drift — 2 fewer simultaneous animations */
+    .animated-background::before,
+    .animated-background::after {
+        animation: none;
+    }
+
+    /* Simplify to single rain layer */
+    .rain-layer {
+        background-image: repeating-linear-gradient(
+            -72deg,
+            transparent 0px, transparent 22px,
+            rgba(140, 180, 230, 0.038) 22px, rgba(140, 180, 230, 0.038) 23px
+        );
+        animation-duration: 1.5s;
+    }
+
+    /* Static header — no pulse animation */
+    .header-wrapper {
+        animation: none;
+        box-shadow: 0 1px 16px rgba(84, 196, 196, 0.12), 0 4px 24px rgba(0, 0, 0, 0.3);
+        /* Force GPU composite layer — prevents iOS Safari scroll flicker */
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    /* No logo glow on mobile — filter:drop-shadow + animation = flicker */
+    .header-wrapper img {
+        animation: none;
+        filter: none;
+    }
+
+    .logo-text-highlight {
+        animation: none;
+        text-shadow: 0 0 12px rgba(84, 196, 196, 0.45);
+    }
+}
+
+/* ============================================================
    ACCESSIBILITY: reduced motion
    ============================================================ */
 

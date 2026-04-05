@@ -53,3 +53,24 @@
     animation: card-shimmer 5s ease-in-out infinite;
     pointer-events: none;
 }
+
+/* ── Mobile: drop backdrop-filter and shimmer animation ── */
+@media (max-width: 768px) {
+    .root {
+        /* More opaque so backdrop-filter is unnecessary */
+        background: rgba(8, 22, 45, 0.97);
+    }
+
+    .root::before {
+        /* backdrop-filter on many stacked elements = severe iOS Safari flicker */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .root::after {
+        /* Stop shimmer animation — background-size animation causes repaints */
+        animation: none;
+        background: linear-gradient(90deg, transparent, rgba(84, 196, 196, 0.35), transparent);
+        background-size: 100% 100%;
+    }
+}

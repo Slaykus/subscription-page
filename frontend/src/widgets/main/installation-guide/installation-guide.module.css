@@ -126,3 +126,24 @@
     opacity: 0.8;
     box-shadow: 0 0 8px rgba(239, 191, 4, 0.4);
 }
+
+/* ── Mobile: stop pulse/bounce animations ── */
+@media (max-width: 768px) {
+    .appButtonActive,
+    .appButtonActive:hover {
+        animation: none;
+        box-shadow:
+            inset 4px 0 12px -4px rgba(84, 196, 196, 0.4),
+            0 0 16px rgba(84, 196, 196, 0.15);
+    }
+
+    .featuredBadge {
+        animation: none;
+        box-shadow: 0 0 8px rgba(239, 191, 4, 0.7);
+    }
+
+    .appButton {
+        /* Opaque bg — no backdrop-filter needed */
+        background: rgba(8, 22, 45, 0.95);
+    }
+}
