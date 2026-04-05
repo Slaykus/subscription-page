@@ -14,4 +14,15 @@
     max-width: 800px;
     width: 100%;
     align-self: center;
+    position: relative;
+}
+
+/* Ambient teal glow around the entire content column */
+.main::before {
+    content: '';
+    position: absolute;
+    inset: -80px -60px;
+    background: radial-gradient(ellipse at 50% 15%, rgba(84, 196, 196, 0.06), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
 }

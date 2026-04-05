@@ -1,18 +1,91 @@
 html,
 body {
     min-height: 100vh;
-    background-color: #161b23;
-    background-image:
-        linear-gradient(to right, rgba(128, 128, 128, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-color: #07101e;
     background-attachment: fixed;
     position: relative;
+}
+
+/* ============================================================
+   SCANLINES TEXTURE
+   ============================================================ */
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ============================================================
+   LIGHTNING FLASH
+   ============================================================ */
+
+@keyframes lightning-flash {
+    0%, 87%, 89%, 91%, 100% { background: transparent; }
+    88% { background: rgba(200, 230, 255, 0.045); }
+    90% { background: rgba(200, 230, 255, 0.025); }
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    animation: lightning-flash 25s ease-in-out infinite;
+    animation-delay: -9s;
+}
+
+/* ============================================================
+   STAR / PARTICLE FIELD
+   ============================================================ */
+
+@keyframes sparkle-twinkle {
+    0%, 100% { opacity: 0.3; }
+    25%       { opacity: 0.85; }
+    50%       { opacity: 0.4; }
+    75%       { opacity: 1; }
+}
+
+#root::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+        radial-gradient(2px 2px at 15% 25%,  rgba(84, 196, 196, 0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 15%,  rgba(255, 255, 255, 0.7) 0%, transparent 100%),
+        radial-gradient(2px 2px at 85% 55%,  rgba(84, 196, 196, 0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 70%,  rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+        radial-gradient(2px 2px at 55% 40%,  rgba(84, 196, 196, 0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 28% 82%,  rgba(255, 255, 255, 0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 28%,  rgba(84, 196, 196, 0.7) 0%, transparent 100%),
+        radial-gradient(2px 2px at 92% 72%,  rgba(255, 255, 255, 0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 50%,  rgba(84, 196, 196, 0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 90%,  rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 33% 10%,  rgba(84, 196, 196, 0.6) 0%, transparent 100%),
+        radial-gradient(2px 2px at 72% 88%,  rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+    animation: sparkle-twinkle 8s ease-in-out infinite;
+    animation-delay: -3s;
 }
 
 #root {
     height: 100vh;
 }
+
+/* ============================================================
+   ATMOSPHERIC BACKGROUND
+   ============================================================ */
 
 .animated-background {
     position: fixed;
@@ -22,32 +95,300 @@ body {
     bottom: 0;
     pointer-events: none;
     z-index: 0;
-    background:
-        radial-gradient(ellipse 60% 40% at 25% 40%, rgba(64, 72, 120, 0.12), transparent 50%),
-        radial-gradient(ellipse 50% 50% at 85% 85%, rgba(26, 148, 148, 0.07), transparent 50%);
+    overflow: hidden;
+    background: linear-gradient(
+        180deg,
+        #0d2040 0%,
+        #091628 30%,
+        #07101e 65%,
+        #050b16 100%
+    );
+}
+
+/* ============================================================
+   CLOUD DRIFT ANIMATIONS (with vertical bob)
+   ============================================================ */
+
+@keyframes cloud-drift-1 {
+    0%   { transform: translateX(-900px)              translateY(0px); }
+    25%  { transform: translateX(calc(25vw - 450px))  translateY(-22px); }
+    50%  { transform: translateX(calc(50vw))          translateY(12px); }
+    75%  { transform: translateX(calc(75vw + 450px))  translateY(-16px); }
+    100% { transform: translateX(calc(100vw + 900px)) translateY(0px); }
+}
+
+@keyframes cloud-drift-2 {
+    0%   { transform: translateX(-750px)              translateY(0px); }
+    33%  { transform: translateX(calc(33vw - 250px))  translateY(20px); }
+    66%  { transform: translateX(calc(66vw + 250px))  translateY(-14px); }
+    100% { transform: translateX(calc(100vw + 750px)) translateY(0px); }
+}
+
+@keyframes cloud-drift-3 {
+    0%   { transform: translateX(-650px)              translateY(0px); }
+    50%  { transform: translateX(calc(50vw - 325px))  translateY(-35px); }
+    100% { transform: translateX(calc(100vw + 650px)) translateY(-10px); }
+}
+
+@keyframes cloud-drift-4 {
+    0%   { transform: translateX(-550px)              translateY(0px); }
+    50%  { transform: translateX(calc(50vw - 275px))  translateY(18px); }
+    100% { transform: translateX(calc(100vw + 550px)) translateY(0px); }
+}
+
+@keyframes cloud-drift-5 {
+    0%   { transform: translateX(calc(100vw + 800px)) translateY(0px); }
+    25%  { transform: translateX(calc(75vw + 400px))  translateY(20px); }
+    50%  { transform: translateX(calc(50vw))          translateY(-14px); }
+    75%  { transform: translateX(calc(25vw - 400px))  translateY(10px); }
+    100% { transform: translateX(-800px)              translateY(0px); }
+}
+
+/* ============================================================
+   CLOUD STYLES — high visibility
+   ============================================================ */
+
+.cloud {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.cloud-1 {
+    width: 900px;
+    height: 180px;
+    top: 7%;
+    background: radial-gradient(
+        ellipse at 40% 55%,
+        rgba(170, 205, 245, 0.45) 0%,
+        rgba(130, 175, 220, 0.22) 45%,
+        transparent 70%
+    );
+    filter: blur(12px);
+    animation: cloud-drift-1 72s linear infinite;
+    animation-delay: -22s;
+}
+
+.cloud-2 {
+    width: 680px;
+    height: 140px;
+    top: 20%;
+    background: radial-gradient(
+        ellipse at 55% 50%,
+        rgba(84, 196, 196, 0.22) 0%,
+        rgba(150, 185, 225, 0.38) 30%,
+        rgba(100, 145, 195, 0.16) 55%,
+        transparent 75%
+    );
+    filter: blur(10px);
+    animation: cloud-drift-2 54s linear infinite;
+    animation-delay: -10s;
+}
+
+.cloud-3 {
+    width: 560px;
+    height: 120px;
+    top: 2%;
+    background: radial-gradient(
+        ellipse at 50% 60%,
+        rgba(175, 210, 250, 0.42) 0%,
+        rgba(135, 178, 228, 0.18) 50%,
+        transparent 70%
+    );
+    filter: blur(8px);
+    animation: cloud-drift-3 40s linear infinite;
+    animation-delay: -30s;
+}
+
+.cloud-4 {
+    width: 450px;
+    height: 110px;
+    top: 32%;
+    background: radial-gradient(
+        ellipse at 45% 55%,
+        rgba(84, 196, 196, 0.18) 0%,
+        rgba(120, 165, 210, 0.30) 40%,
+        transparent 65%
+    );
+    filter: blur(8px);
+    animation: cloud-drift-4 46s linear infinite;
+    animation-delay: -38s;
+}
+
+.cloud-5 {
+    width: 820px;
+    height: 165px;
+    top: 13%;
+    background: radial-gradient(
+        ellipse at 60% 45%,
+        rgba(160, 195, 235, 0.40) 0%,
+        rgba(84, 196, 196, 0.14) 40%,
+        rgba(115, 158, 205, 0.20) 55%,
+        transparent 72%
+    );
+    filter: blur(12px);
+    animation: cloud-drift-5 85s linear infinite;
+    animation-delay: -50s;
+}
+
+/* ============================================================
+   MOONBEAM / AURORA GLOW
+   ============================================================ */
+
+@keyframes moonbeam-pulse {
+    0%, 100% { opacity: 0.6; }
+    50%       { opacity: 1; }
+}
+
+@keyframes aurora-drift {
+    0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+    33%       { transform: translateX(80px) translateY(-30px) scale(1.05); }
+    66%       { transform: translateX(-40px) translateY(20px) scale(0.97); }
+}
+
+.animated-background::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 10%;
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(
+        ellipse at 50% 35%,
+        rgba(84, 196, 196, 0.12) 0%,
+        rgba(64, 110, 180, 0.07) 40%,
+        transparent 70%
+    );
+    pointer-events: none;
+    animation: moonbeam-pulse 10s ease-in-out infinite, aurora-drift 25s ease-in-out infinite;
+    animation-delay: 0s, -8s;
+}
+
+.animated-background::after {
+    content: '';
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    width: 500px;
+    height: 400px;
+    background: radial-gradient(
+        ellipse at 60% 40%,
+        rgba(100, 140, 200, 0.07) 0%,
+        rgba(84, 196, 196, 0.05) 45%,
+        transparent 70%
+    );
+    pointer-events: none;
+    animation: moonbeam-pulse 14s ease-in-out infinite, aurora-drift 32s ease-in-out infinite;
+    animation-delay: -5s, -15s;
+}
+
+/* ============================================================
+   RAIN LAYER — dual-angle depth
+   ============================================================ */
+
+@keyframes rain-fall {
+    0%   { background-position: 0px 0px, 0px 0px; }
+    100% { background-position: 40px 120px, 30px 90px; }
+}
+
+.rain-layer {
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            -72deg,
+            transparent 0px,
+            transparent 18px,
+            rgba(140, 180, 230, 0.055) 18px,
+            rgba(140, 180, 230, 0.055) 19px
+        ),
+        repeating-linear-gradient(
+            -64deg,
+            transparent 0px,
+            transparent 28px,
+            rgba(84, 196, 196, 0.022) 28px,
+            rgba(84, 196, 196, 0.022) 29px
+        );
+    animation: rain-fall 1.0s linear infinite;
+}
+
+/* ============================================================
+   ACCESSIBILITY: reduced motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .cloud,
+    .rain-layer,
+    .animated-background::before,
+    .animated-background::after,
+    .logo-text-highlight,
+    .header-wrapper,
+    .header-wrapper img {
+        animation: none !important;
+    }
+
+    body::before,
+    body::after,
+    #root::before {
+        display: none;
+    }
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+@keyframes header-pulse {
+    0%, 100% { box-shadow: 0 1px 20px rgba(84, 196, 196, 0.08), 0 4px 30px rgba(0, 0, 0, 0.3); }
+    50%       { box-shadow: 0 1px 38px rgba(84, 196, 196, 0.24), 0 4px 44px rgba(0, 0, 0, 0.45); }
 }
 
 .header-wrapper {
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(22, 27, 35, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(7, 16, 30, 0.92);
+    border-bottom: 1px solid rgba(84, 196, 196, 0.2);
+    animation: header-pulse 6s ease-in-out infinite;
 
     @media (min-width: 768px) {
         border-radius: 0 0 var(--mantine-radius-lg) var(--mantine-radius-lg);
     }
 }
 
+/* Logo image (custom logo from panel config) glow */
+@keyframes logo-img-pulse {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(84, 196, 196, 0.25)); }
+    50%       { filter: drop-shadow(0 0 18px rgba(84, 196, 196, 0.75)); }
+}
+
+.header-wrapper img {
+    filter: drop-shadow(0 0 4px rgba(84, 196, 196, 0.25));
+    animation: logo-img-pulse 4s ease-in-out infinite;
+    animation-delay: -1s;
+}
+
+/* Fallback text logo glow (when no custom logo set) */
+@keyframes glow-pulse {
+    0%, 100% { text-shadow: 0 0 20px rgba(84, 196, 196, 0.5); }
+    50%       { text-shadow: 0 0 40px rgba(84, 196, 196, 0.9), 0 0 80px rgba(84, 196, 196, 0.35); }
+}
+
 .logo-text-highlight {
     color: var(--mantine-color-cyan-4);
+    animation: glow-pulse 4s ease-in-out infinite;
 }
 
 .logo-text-normal {
-    color: white;
+    color: rgba(255, 255, 255, 0.92);
 }
+
+/* ============================================================
+   INFO CARDS
+   ============================================================ */
 
 .info-card-cyan {
     background: linear-gradient(135deg, rgba(84, 196, 196, 0.1) 0%, rgba(61, 186, 186, 0.05) 100%);

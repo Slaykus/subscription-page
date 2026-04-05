@@ -1,11 +1,16 @@
 .accordionItem {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(145deg, rgba(8, 22, 45, 0.82) 0%, rgba(5, 14, 30, 0.75) 100%);
+    border: 1px solid rgba(140, 180, 230, 0.1);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .accordionItem[data-active] {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(84, 196, 196, 0.3);
+    background: linear-gradient(145deg, rgba(8, 22, 50, 0.88) 0%, rgba(5, 14, 32, 0.82) 100%);
+    border-color: rgba(84, 196, 196, 0.4);
+    box-shadow:
+        0 0 0 1px rgba(84, 196, 196, 0.07),
+        inset 0 1px 0 rgba(84, 196, 196, 0.07),
+        0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .accordionControl {
@@ -14,7 +19,7 @@
 }
 
 .accordionControl:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(84, 196, 196, 0.04);
     border-radius: var(--mantine-radius-lg);
 }
 
